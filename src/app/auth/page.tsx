@@ -4,7 +4,18 @@ import Link from "next/link";
 
 export default function Page() {
     return (
-        <main className="relative h-screen w-screen flex flex-col justify-end">
+        <main className="relative h-screen w-screen flex flex-col justify-end bg-gradient-to-b from-[#6F9BDB] to-[#03032C] overflow-clip">
+            <div className="flex justify-center items-center relative">
+                <div className="h-screen absolute -bottom-12">
+                    <img src="logo.svg" />
+                </div>
+                <div className="h-screen absolute -bottom-32">
+                    <img src="trees.png" />
+                </div>
+                <div className="h-screen absolute -bottom-40">
+                    <img src="characters.svg" />
+                </div>
+            </div>
             <div className="w-full absolute bg-[#E8E9FC] text-black rounded-t-3xl flex flex-col gap-10 justify-center items-center py-10">
                 <section className="text-center w-full px-7 flex flex-col gap-4">
                     <h1 className="font-bold text-3xl tracking-tight">
@@ -46,9 +57,11 @@ export default function Page() {
                         type="button"
                         className="border-4 border-[#03032C] text-[#03032C] rounded-full py-2"
                     >
-                        <span className="font-semibold tracking-wide text-xl">
-                            Continue as Guest
-                        </span>
+                        <Link href={"/"}>
+                            <span className="font-semibold tracking-wide text-xl">
+                                Continue as Guest
+                            </span>
+                        </Link>
                     </button>
                 </footer>
             </div>

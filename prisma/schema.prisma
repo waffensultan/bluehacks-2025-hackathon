@@ -20,14 +20,16 @@ model User {
 }
 
 model Post {
-  id        String     @id @default(cuid())
-  authorId  String?
-  author    User?      @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  name      String // Name of the poster can be "Anonymous"
-  tags      Tag[]
-  status    PostStatus @default(AWAITING)
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  id          String     @id @default(cuid())
+  authorId    String?
+  author      User?      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  name        String? // Name of the poster can be "Anonymous"
+  tags        Tag[]
+  baranggayId String
+  baranggay   Baranggay  @relation(fields: [baranggayId], references: [id])
+  status      PostStatus @default(AWAITING)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
 
   // ADD: status -> has respondents or not
 
@@ -35,10 +37,13 @@ model Post {
 }
 
 model News {
-  id        String   @id @default(cuid())
-  name      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String    @id @default(cuid())
+  title       String
+  content     String
+  baranggayId String
+  baranggay   Baranggay @relation(fields: [baranggayId], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
   @@map("news")
 }
@@ -56,4 +61,13 @@ model Tag {
   posts  Post?  @relation(fields: [postId], references: [id])
 
   @@map("tags")
+}
+
+model Baranggay {
+  id    String @id @default(cuid())
+  name  String
+  posts Post[]
+  news  News[]
+
+  @@map("baranggays")
 }

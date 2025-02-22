@@ -83,7 +83,9 @@ export default function Page() {
                     type="button"
                     className="w-full bg-[#03032C] text-white rounded-full text-xl py-2 mt-5 mb-2"
                 >
-                    <span className="font-semibold tracking-wide">Log In</span>
+                    <span className="font-semibold tracking-wide">
+                        Register
+                    </span>
                 </button>
                 <span className="text-neutral-500 text-center">
                     Already have an account?{" "}
