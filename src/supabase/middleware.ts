@@ -1,7 +1,7 @@
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { type NextRequest, NextResponse } from "next/server";
 
-export const createClient = (request: NextRequest) => {
+export const updateSession = (request: NextRequest) => {
     // Create an unmodified response
     let supabaseResponse = NextResponse.next({
         request: {

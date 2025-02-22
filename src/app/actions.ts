@@ -9,11 +9,11 @@ export async function createPost() {
                 name: "A testing post",
                 tags: {
                     create: {
-                        title: "Rescue"
-                    }
-                }
-            }
-        })
+                        title: "Rescue",
+                    },
+                },
+            },
+        });
 
         console.log("Successfully created a post.");
     } catch (error) {
