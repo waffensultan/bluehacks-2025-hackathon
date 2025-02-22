@@ -11,8 +11,20 @@ export default {
             colors: {
                 background: "var(--background)",
                 foreground: "var(--foreground)",
-
-                // Add colors here...
+                primary: "#FF6912",
+                secondary: "#FB5512",
+                light: "#E8E9FC",
+                dark: "#03032C",
+                white: "#FFFFFF",
+                info: "#FDA303",
+                accent: {
+                    "1": "#3C4564",
+                    "2": "#5E6E92",
+                    "3": "#A1AAB4",
+                },
+                success: "#60B100",
+                warning: "#FFC473",
+                danger: "#F80066",
             },
         },
     },
