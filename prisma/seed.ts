@@ -34,7 +34,7 @@ async function main() {
     ];
 
     // Ensure only valid data is inserted
-    const filteredNewsData = newsData
+    const filteredNewsData = newsData;
 
     if (filteredNewsData.length > 0) {
         await prisma.news.createMany({ data: filteredNewsData });

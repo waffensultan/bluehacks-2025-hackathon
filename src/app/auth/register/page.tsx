@@ -3,11 +3,15 @@
 import Link from "next/link";
 
 import { ArrowLeft } from "lucide-react";
+import { signup } from "@/app/auth/actions";
 
 export default function Page() {
     return (
         <main className="w-screen h-screen">
-            <form className="bg-[#E8E9FC] w-full h-full text-black px-10 pt-10 flex flex-col">
+            <form
+                action={signup}
+                className="bg-[#E8E9FC] w-full h-full text-black px-10 pt-10 flex flex-col"
+            >
                 <section className="flex flex-row items-center justify-center">
                     <Link href={"/auth"} className="absolute left-7">
                         <ArrowLeft className="w-10 h-10" />
@@ -80,7 +84,7 @@ export default function Page() {
                 </section>
 
                 <button
-                    type="button"
+                    type="submit"
                     className="w-full bg-[#03032C] text-white rounded-full text-xl py-2 mt-5 mb-2"
                 >
                     <span className="font-semibold tracking-wide">

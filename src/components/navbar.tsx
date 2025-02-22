@@ -25,6 +25,7 @@ import { Plus } from "lucide-react";
 import { createPost } from "@/actions/actions";
 
 export default function Navbar() {
+    const [archiveActive, setArchiveActive] = useState(false);
     const [openDialog, setOpenDialog] = useState(false);
 
     const pathname = usePathname();
@@ -166,7 +167,7 @@ export default function Navbar() {
                                 <SelectContent className="w-full text-white bg-white text-black">
                                     {secondaryTags["4"].map((item) => (
                                         <SelectItem key={item} value={item}>
-                                            {item}
+                                            Needs {item}
                                         </SelectItem>
                                     ))}
                                 </SelectContent>

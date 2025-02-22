@@ -20,7 +20,7 @@ export interface NewsInterface {
     id: string;
     title: string;
     content: string;
-    createdAt: string; 
+    createdAt: string;
     updatedAt: string;
     baranggay: {
         id: string;

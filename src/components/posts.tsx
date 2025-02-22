@@ -13,22 +13,44 @@ import { Accessibility } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
+import { createClient } from "@/supabase/client";
+
 import { Dialog, DialogContent, DialogTitle } from "@/components/dialog";
 
 export default function Posts({ posts }: { posts: Post[] }) {
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [clearView, setClearView] = useState(false);
     const [selectedPost, setSelectedPost] = useState<undefined | Post>(
         undefined
     );
 
     const router = useRouter();
+    const supabase = createClient();
 
     useEffect(() => {
         const storedBaranggay = localStorage.getItem("baranggay");
         if (!storedBaranggay) {
             router.push("/confirmation");
         }
+
+        const checkAuthentication = async () => {
+            const {
+                data: { user },
+            } = await supabase.auth.getUser();
+
+            if (!user) {
+                setIsAuthenticated(false);
+            }
+        };
+
+        checkAuthentication();
     }, []);
+
+    const takeAction = () => {
+        if (!isAuthenticated) {
+            router.push("/auth");
+        }
+    };
 
     return (
         <main className="text-black mx-5 h-screen pt-10 flex flex-col gap-5 overflow-auto py-10">
@@ -92,7 +114,10 @@ export default function Posts({ posts }: { posts: Post[] }) {
                         </ul>
 
                         <section className="flex justify-between items-center">
-                            <button className="text-white font-semibold text-xl py-2 px-3 bg-[#FF6912] rounded-full border-2 border-[#03032C]">
+                            <button
+                                onClick={() => takeAction()}
+                                className="text-white font-semibold text-xl py-2 px-3 bg-[#FF6912] rounded-full border-2 border-[#03032C]"
+                            >
                                 Take Action
                             </button>
                             <span>
@@ -202,7 +227,12 @@ export default function Posts({ posts }: { posts: Post[] }) {
                                                         : ""
                                             }`}
                                         ></div>
-                                        <span>{tag.title}</span>
+                                        <span>
+                                            {secondaryTags["4"].includes(
+                                                tag.title
+                                            ) && "Needs"}{" "}
+                                            {tag.title}
+                                        </span>
                                     </div>
                                 );
                             })}

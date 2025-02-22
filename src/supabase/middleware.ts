@@ -1,7 +1,7 @@
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { type NextRequest, NextResponse } from "next/server";
 
-export const updateSession = (request: NextRequest) => {
+export const updateSession = async (request: NextRequest) => {
     // Create an unmodified response
     let supabaseResponse = NextResponse.next({
         request: {
@@ -31,6 +31,17 @@ export const updateSession = (request: NextRequest) => {
             },
         }
     );
+
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user && request.nextUrl.pathname.startsWith("/archive")) {
+        const url = request.nextUrl.clone();
+        url.pathname = "/auth";
+
+        return NextResponse.redirect(url);
+    }
 
     return supabaseResponse;
 };

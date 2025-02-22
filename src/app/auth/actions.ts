@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { createClient } from "@/supabase/server";
+import { prisma } from "@/lib/db";
 
 export async function login(formData: FormData) {
     const supabase = await createClient();
@@ -34,6 +35,32 @@ export async function signup(formData: FormData) {
     };
 
     const { error } = await supabase.auth.signUp(data);
+
+    if (error) {
+        redirect("/error");
+    }
+
+    try {
+        await prisma.user.create({
+            data: {
+                name: "",
+                email: formData.get("email") as string,
+                isVolunteer: false,
+            },
+        });
+    } catch (error) {
+        console.log(error);
+        redirect("/error");
+    }
+
+    revalidatePath("/", "layout");
+    redirect("/");
+}
+
+export async function logout() {
+    const supabase = await createClient();
+
+    const { error } = await supabase.auth.signOut();
 
     if (error) {
         redirect("/error");
