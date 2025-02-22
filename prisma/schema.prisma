@@ -8,10 +8,11 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-model Volunteer {
-  id    String @id @default(cuid())
-  name  String
-  email String @unique
+model User {
+  id          String  @id @default(cuid())
+  name        String
+  email       String  @unique
+  isVolunteer Boolean
 
-  @@map("volunteers")
+  @@map("users")
 }
