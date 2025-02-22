@@ -21,13 +21,22 @@ model User {
 model Post {
   id        String   @id @default(cuid())
   authorId  String?
-  author    User?     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  author    User?    @relation(fields: [authorId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   name      String // Name of the poster can be "Anonymous"
+  tags      Tag[]
 
-  // Add additional fields...
-  // status -> has respondents or not
+  // ADD: status -> has respondents or not
 
   @@map("posts")
+}
+
+model Tag {
+  id     String @id @default(cuid())
+  title  String
+  postId String
+  posts  Post?  @relation(fields: [postId], references: [id])
+
+  @@map("tags")
 }
