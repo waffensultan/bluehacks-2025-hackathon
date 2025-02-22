@@ -14,16 +14,6 @@ export async function createPost() {
                 }
             }
         })
-        // await prisma.post.create({
-        //     data: {
-        //         name: "A testing post",
-        //         tags: {
-        //             create: {
-        //                 title: "Rescue",
-        //             },
-        //         },
-        //     },
-        // });
 
         console.log("Successfully created a post.");
     } catch (error) {
