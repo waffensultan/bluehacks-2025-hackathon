@@ -25,7 +25,6 @@ import { Plus } from "lucide-react";
 import { createPost } from "@/actions/actions";
 
 export default function Navbar() {
-    const [archiveActive, setArchiveActive] = useState(false);
     const [openDialog, setOpenDialog] = useState(false);
 
     const pathname = usePathname();

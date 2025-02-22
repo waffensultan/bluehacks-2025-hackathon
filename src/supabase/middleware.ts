@@ -36,7 +36,12 @@ export const updateSession = async (request: NextRequest) => {
         data: { user },
     } = await supabase.auth.getUser();
 
-    if (!user && request.nextUrl.pathname.startsWith("/archive")) {
+    // Protected Routes
+    if (
+        !user &&
+        (request.nextUrl.pathname.startsWith("/archive") ||
+            request.nextUrl.pathname.startsWith("/apply"))
+    ) {
         const url = request.nextUrl.clone();
         url.pathname = "/auth";
 

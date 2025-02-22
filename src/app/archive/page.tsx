@@ -2,7 +2,7 @@ import { prisma } from "@/lib/db";
 import { Post } from "@/lib/constants";
 import { Suspense } from "react";
 import Navbar from "@/components/navbar";
-import Posts from "@/components/posts";
+import Archive from "@/app/archive/client-component";
 import { createClient } from "@/supabase/server";
 import { subHours } from "date-fns";
 
@@ -16,14 +16,14 @@ export default async function Page() {
                     </div>
                 }
             >
-                <PostWrapper />
+                <ArchiveWrapper />
             </Suspense>
             <Navbar />
         </main>
     );
 }
 
-async function PostWrapper() {
+async function ArchiveWrapper() {
     const supabase = await createClient();
 
     const {
@@ -34,16 +34,14 @@ async function PostWrapper() {
 
     const posts = await prisma.post.findMany({
         where: {
-            NOT: {
-                OR: [
-                    {
-                        status: "RESCUED",
-                    },
-                    {
-                        createdAt: { lt: twoDaysAgo },
-                    },
-                ],
-            },
+            OR: [
+                {
+                    status: "RESCUED",
+                },
+                {
+                    createdAt: { lt: twoDaysAgo },
+                },
+            ],
         },
         include: {
             baranggay: true,
@@ -65,5 +63,5 @@ async function PostWrapper() {
         })),
     }));
 
-    return <Posts posts={serializedPosts} authenticated={user !== null} />;
+    return <Archive posts={serializedPosts} authenticated={user !== null} />;
 }

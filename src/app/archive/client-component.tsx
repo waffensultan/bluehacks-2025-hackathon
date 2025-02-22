@@ -8,18 +8,17 @@ import {
     tagsWithIcons,
     secondaryTags,
 } from "@/lib/constants";
-import { Accessibility, ExternalLink } from "lucide-react";
+import { Accessibility } from "lucide-react";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 
 import { logout } from "@/app/auth/actions";
 import { takeAction, completePost } from "@/actions/actions";
 
 import { Dialog, DialogContent, DialogTitle } from "@/components/dialog";
 
-export default function Posts({
+export default function Archive({
     posts,
     authenticated,
 }: {
@@ -45,18 +44,9 @@ export default function Posts({
     return (
         <main className="text-black mx-5 h-screen pt-10 flex flex-col gap-5 overflow-auto py-10">
             {authenticated && (
-                <div className="w-full flex justify-between items-center">
-                    <button type="button" onClick={() => logout()}>
-                        Logout
-                    </button>
-                    <Link
-                        href={"/apply"}
-                        className="font-semibold tracking-tight underline text-blue-700 flex flex-row items-center gap-1"
-                    >
-                        <ExternalLink />
-                        <span>Apply as a Volunteer</span>
-                    </Link>
-                </div>
+                <button type="button" onClick={() => logout()}>
+                    Logout
+                </button>
             )}
             {posts.map((post) => {
                 return (

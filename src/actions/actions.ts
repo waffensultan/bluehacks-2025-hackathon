@@ -55,3 +55,29 @@ export async function createPost(formData: FormData) {
         throw new Error("Failed to create post.");
     }
 }
+
+export async function takeAction(postId: string) {
+    try {
+        await prisma.post.update({
+            where: { id: postId },
+            data: { status: "RESCUING" },
+        });
+
+        revalidatePath("/", "layout");
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+export async function completePost(postId: string) {
+    try {
+        await prisma.post.update({
+            where: { id: postId },
+            data: { status: "RESCUED" },
+        });
+
+        revalidatePath("/", "layout");
+    } catch (error) {
+        console.error(error);
+    }
+}

@@ -51,7 +51,7 @@ export const convertedStatus: Record<PostStatus, string> = {
 };
 export const statusColors: Record<PostStatus, string> = {
     AWAITING: "bg-red-500",
-    RESCUING: "bg-yellow-500",
+    RESCUING: "bg-yellow-400",
     RESCUED: "bg-green-500",
 };
 export const tagsWithIcons: Record<string, LucideIcon> = {
