@@ -13,6 +13,21 @@ model User {
   name        String
   email       String  @unique
   isVolunteer Boolean
+  posts       Post[]
 
   @@map("users")
+}
+
+model Post {
+  id        String   @id @default(cuid())
+  authorId  String?
+  author    User?     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String // Name of the poster can be "Anonymous"
+
+  // Add additional fields...
+  // status -> has respondents or not
+
+  @@map("posts")
 }
