@@ -57,7 +57,7 @@ export default function Navbar() {
                 </DialogTrigger>
                 <DialogContent className="bg-white border-4 border-[#03032C] text-[#03032C] rounded-xl w-[90%]">
                     <DialogHeader>
-                        <DialogTitle className="text-3xl">
+                        <DialogTitle className="text-2xl">
                             Create a Post 📝
                         </DialogTitle>
                     </DialogHeader>
@@ -65,7 +65,7 @@ export default function Navbar() {
                         <div className="flex flex-col">
                             <label
                                 htmlFor="name"
-                                className="text-xl tracking-wide"
+                                className="text-lg tracking-wide"
                             >
                                 Name
                             </label>
@@ -74,7 +74,7 @@ export default function Navbar() {
                                 name="name"
                                 type="string"
                                 placeholder="Enter your name here"
-                                className="border rounded-2xl py-2 px-4 border-[#5E6E92]"
+                                className="border rounded-2xl py-1 text-sm px-4 border-[#5E6E92]"
                             />
                         </div>
 
@@ -90,13 +90,13 @@ export default function Navbar() {
                                 name="baranggay"
                                 type="string"
                                 placeholder="Enter your baranggay here"
-                                className="border rounded-2xl py-2 px-4 border-[#5E6E92]"
+                                className="border rounded-2xl py-1 text-sm px-4 border-[#5E6E92]"
                             />
                         </div>
 
                         <div>
                             <fieldset className="space-y-2">
-                                <legend className="text-xl tracking-wide">
+                                <legend className="text-lg tracking-wide">
                                     Priority Group
                                 </legend>
                                 <div className="space-y-2 flex flex-wrap gap-3">
@@ -118,7 +118,7 @@ export default function Navbar() {
                                                 value={tag}
                                                 className="w-5 h-5"
                                             />
-                                            <span className="text-lg">
+                                            <span className="text-sm">
                                                 {tag}
                                             </span>
                                         </label>
@@ -176,7 +176,7 @@ export default function Navbar() {
                         <div className="flex flex-col">
                             <label
                                 htmlFor="image"
-                                className="text-xl tracking-wide"
+                                className="text-lg tracking-wide"
                             >
                                 Upload image
                             </label>
@@ -185,10 +185,10 @@ export default function Navbar() {
                             </div>
                         </div>
 
-                        <div className="flex w-full justify-center items-center pt-10">
+                        <div className="flex w-full justify-center items-center">
                             <button
                                 type="submit"
-                                className="font-semibold text-white bg-[#03032C] py-2 px-20 rounded-full tracking-wide text-xl"
+                                className="font-semibold text-white bg-[#03032C] py-2 px-20 rounded-full tracking-wide text-lg"
                             >
                                 Submit
                             </button>
@@ -205,7 +205,7 @@ export default function Navbar() {
                         return (
                             <li
                                 key={link.name}
-                                className={`${activePath ? "bg-[#03032C]" : "bg-white text-[#03032C] border-[#03032C]"}  border-2 rounded-full w-32 text-center py-3`}
+                                className={`${activePath ? "bg-[#03032C] text-white" : "bg-white text-[#03032C] border-[#03032C]"}  border-2 rounded-full w-32 text-center py-3`}
                             >
                                 <Link href={link.url} className="w-full h-full">
                                     <span className="font-semibold text-xl tracking-tight">
