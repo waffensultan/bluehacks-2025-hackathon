@@ -61,7 +61,7 @@ export default function Navbar() {
                             Create a Post 📝
                         </DialogTitle>
                     </DialogHeader>
-                    <form action={createPost} className="flex flex-col gap-5">
+                    <form action={createPost} className="flex flex-col gap-1">
                         <div className="flex flex-col">
                             <label
                                 htmlFor="name"
