@@ -55,7 +55,7 @@ export default function Navbar() {
                         <Plus className="w-10 h-10 text-white" />
                     </button>
                 </DialogTrigger>
-                <DialogContent className="bg-white border-4 border-[#03032C] text-[#03032C] rounded-xl w-[90%]">
+                <DialogContent className="bg-white border-4 border-[#03032C] text-[#03032C] rounded-xl w-[90%] pb-2">
                     <DialogHeader>
                         <DialogTitle className="text-2xl">
                             Create a Post 📝
@@ -185,7 +185,7 @@ export default function Navbar() {
                             </div>
                         </div>
 
-                        <div className="flex w-full justify-center items-center">
+                        <div className="flex w-full justify-center items-center pt-3">
                             <button
                                 type="submit"
                                 className="font-semibold text-white bg-[#03032C] py-2 px-20 rounded-full tracking-wide text-lg"
