@@ -38,12 +38,12 @@ export default function Page() {
     }, [baranggay]);
 
     return (
-        <main className="bg-gradient-to-b from-[#6F9BDB] to-[#03032C] h-screen w-screen flex justify-center items-center flex-col gap-40">
-            <div className="w-32 h-32">
+        <main className="bg-gradient-to-b from-[#6F9BDB] to-[#03032C] h-screen w-screen flex justify-center items-center flex-col">
+            <div className="w-32 h-auto w-full flex justify-center items-center">
                 <img src="logo.svg" className="object-contain" />
             </div>
 
-            <div className="p-10 rounded-xl bg-[#E8E9FC] text-[#03032C] mx-6 -mt-32">
+            <div className="p-10 rounded-xl bg-[#E8E9FC] text-[#03032C] mx-6 py-20 mt-5">
                 <h1 className="text-xl font-semibold">
                     Where are you located?
                 </h1>
@@ -83,6 +83,15 @@ export default function Page() {
                     >
                         Proceed
                     </button>
+                </div>
+            </div>
+
+            <div className="w-full flex justify-center items-center mt-10">
+                <div className="w-96 h-auto">
+                    <img
+                        src="/boat_characters.svg"
+                        className="object-contain"
+                    />
                 </div>
             </div>
         </main>

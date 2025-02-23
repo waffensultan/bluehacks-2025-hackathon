@@ -61,7 +61,7 @@ export default function Posts({
                         </div>
                     </Link>
 
-                    {authenticated && (
+                    {authenticated ? (
                         <button
                             type="button"
                             onClick={() => logout()}
@@ -69,6 +69,8 @@ export default function Posts({
                         >
                             Logout
                         </button>
+                    ) : (
+                        <div className="font-semibold">Guest</div>
                     )}
                 </div>
 

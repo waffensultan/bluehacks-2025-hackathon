@@ -99,7 +99,7 @@ export default function Page() {
                 </span>
                 <div className="grow relative">
                     <img
-                        src="/login_character.svg"
+                        src="/register_image.svg"
                         className="object-contain absolute bottom-0"
                     />
                 </div>
