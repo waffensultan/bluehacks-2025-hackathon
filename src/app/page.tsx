@@ -63,6 +63,7 @@ async function PostWrapper() {
 
     const serializedPosts: Post[] = posts.map((post) => ({
         ...post,
+        mediaUrl: post.mediaUrl ?? undefined,
         createdAt: post.createdAt.toISOString(),
         updatedAt: post.updatedAt.toISOString(),
         baranggay: {
