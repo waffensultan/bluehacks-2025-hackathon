@@ -18,7 +18,6 @@ const eslintConfig = [
             "@typescript-eslint/no-non-null-asserted-optional-chain": "off", // Allow non-null assertions
             "react/no-unescaped-entities": "off", // Disable warnings for special characters like ' and "
             "react-hooks/exhaustive-deps": "off", // Disable missing dependencies warning in useEffect
-            "@typescript-eslint/no-unused-vars": "off",
         },
     },
 ];
