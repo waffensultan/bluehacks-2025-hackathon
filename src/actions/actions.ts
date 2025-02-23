@@ -6,6 +6,7 @@ import { revalidatePath } from "next/cache";
 export async function createPost(formData: FormData) {
     const name = formData.get("name") as string;
     const baranggayName = formData.get("baranggay") as string;
+    const mediaUrl = formData.get("mediaUrl") as string;
 
     // Primary Tags
     const selectedPriorityGroups = formData.getAll("priorityGroup") as string[];
@@ -43,6 +44,7 @@ export async function createPost(formData: FormData) {
                     create: tags.map((tag) => ({ title: tag })),
                 },
                 baranggayId: baranggay.id, // Use the found or created baranggay ID
+                mediaUrl,
             },
             include: {
                 tags: true,

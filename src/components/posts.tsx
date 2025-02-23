@@ -2,12 +2,7 @@
 
 import { Post } from "@/lib/constants";
 import { formatDistanceToNow, parseISO } from "date-fns";
-import {
-    convertedStatus,
-    statusColors,
-    tagsWithIcons,
-    secondaryTags,
-} from "@/lib/constants";
+import { convertedStatus, tagsWithIcons, secondaryTags } from "@/lib/constants";
 import { Accessibility, ExternalLink } from "lucide-react";
 
 import { useState } from "react";
@@ -106,15 +101,16 @@ export default function Posts({
                             Cavite · {post.baranggay.name}
                         </header>
 
-                        <section className="bg-[url('/sample_image.png')] h-52 bg-no-repeat flex py-5 px-3">
-                            <div className="bg-white border self-end rounded-full py-1 px-4 flex flex-row gap-2 items-center">
+                        <section className="border-2 border-[#03032C] rounded-md w-full h-52 relative">
+                            <img
+                                src={post.mediaUrl || "sample_image.png"}
+                                className="object-cover w-full h-full"
+                            />
+                            <div className="bg-white bottom-3 ml-2 absolute py-1 px-4 rounded-full w-[70%] text-sm flex flex-row items-center gap-2">
                                 <div
-                                    className={`w-4 h-4 rounded-full ${statusColors[post.status]}`}
+                                    className={`${post.status === "AWAITING" && "bg-red-500"} ${post.status === "RESCUED" && "bg-green-500"} ${post.status === "RESCUING" && "bg-yellow-400"} w-4 h-4 rounded-full `}
                                 ></div>
-                                <span>
-                                    <b>Status</b>:{" "}
-                                    {convertedStatus[post.status]}
-                                </span>
+                                Status: {convertedStatus[post.status]}
                             </div>
                         </section>
 
@@ -159,7 +155,7 @@ export default function Posts({
                             >
                                 Take Action
                             </button>
-                            <span>
+                            <span className="text-sm">
                                 Posted{" "}
                                 {formatDistanceToNow(parseISO(post.createdAt), {
                                     addSuffix: true,
@@ -185,16 +181,13 @@ export default function Posts({
                             Cavite · {selectedPost?.baranggay.name}
                         </header>
 
-                        <section className="bg-[url('/sample_image.png')] h-52 bg-no-repeat flex py-5 px-3">
-                            <div className="bg-white border self-end rounded-full py-1 px-4 flex flex-row gap-2 items-center">
-                                <div
-                                    className={`w-3.5 h-3.5 rounded-full ${statusColors[selectedPost?.status!]}`}
-                                ></div>
-                                <span>
-                                    <b>Status</b>:{" "}
-                                    {convertedStatus[selectedPost?.status!]}
-                                </span>
-                            </div>
+                        <section className="border-2 border-[#03032C] rounded-md w-full h-52">
+                            <img
+                                src={
+                                    selectedPost?.mediaUrl || "sample_image.png"
+                                }
+                                className="object-cover w-full h-full"
+                            />
                         </section>
 
                         <h1 className="text-black font-semibold text-3xl -mt-3">

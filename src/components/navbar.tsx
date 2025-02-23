@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { usePathname } from "next/navigation";
 
 import {
@@ -18,14 +18,18 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/select";
+import { UploadButton } from "@/utils/uploadthing";
 
 import { secondaryTags } from "@/lib/constants";
 
-import { Plus, ImageDown } from "lucide-react";
+import { Plus } from "lucide-react";
 import { createPost } from "@/actions/actions";
 
 export default function Navbar() {
     const [openDialog, setOpenDialog] = useState(false);
+    const [mediaUrl, setMediaUrl] = useState("");
+
+    const formRef = useRef<HTMLFormElement>(null);
 
     const pathname = usePathname();
 
@@ -44,6 +48,21 @@ export default function Navbar() {
         },
     ];
 
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+
+        // ✅ Append mediaUrl to FormData
+        if (mediaUrl) {
+            formData.append("mediaUrl", mediaUrl);
+        }
+
+        await createPost(formData);
+
+        formRef.current?.reset();
+        setMediaUrl("");
+    };
+
     return (
         <div className="absolute bottom-0 z-50 sticky">
             <Dialog open={openDialog} onOpenChange={setOpenDialog}>
@@ -61,7 +80,11 @@ export default function Navbar() {
                             Create a Post 📝
                         </DialogTitle>
                     </DialogHeader>
-                    <form action={createPost} className="flex flex-col gap-1">
+                    <form
+                        ref={formRef}
+                        onSubmit={handleSubmit}
+                        className="flex flex-col gap-1"
+                    >
                         <div className="flex flex-col">
                             <label
                                 htmlFor="name"
@@ -175,14 +198,24 @@ export default function Navbar() {
 
                         <div className="flex flex-col">
                             <label
-                                htmlFor="image"
+                                htmlFor="picture"
                                 className="text-lg tracking-wide"
                             >
                                 Upload image
                             </label>
-                            <div className="w-full bg-gray-400 rounded-md h-32 flex justify-center items-center">
-                                <ImageDown className="w-20 h-20" />
-                            </div>
+                            <UploadButton
+                                className="self-start"
+                                endpoint="imageUploader"
+                                onClientUploadComplete={(res) => {
+                                    const fileUrl = res[0].url;
+
+                                    setMediaUrl(fileUrl);
+                                }}
+                                onUploadError={(error: Error) => {
+                                    // Do something with the error.
+                                    alert(`ERROR! ${error.message}`);
+                                }}
+                            />
                         </div>
 
                         <div className="flex w-full justify-center items-center pt-3">

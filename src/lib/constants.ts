@@ -15,6 +15,7 @@ export interface Post {
         name: string;
     };
     tags: { id: string; title: string }[];
+    mediaUrl?: string;
 }
 export interface NewsInterface {
     id: string;

@@ -25,6 +25,7 @@ model Post {
   author      User?      @relation(fields: [authorId], references: [id], onDelete: Cascade)
   name        String? // Name of the poster can be "Anonymous"
   tags        Tag[]
+  mediaUrl    String?
   baranggayId String
   baranggay   Baranggay  @relation(fields: [baranggayId], references: [id])
   status      PostStatus @default(AWAITING)
