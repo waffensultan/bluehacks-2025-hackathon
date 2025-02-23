@@ -30,6 +30,16 @@ async function PostWrapper() {
         data: { user },
     } = await supabase.auth.getUser();
 
+    let dbUser = null;
+
+    if (user?.email) {
+        dbUser = await prisma.user.findUnique({
+            where: {
+                email: user.email,
+            },
+        });
+    }
+
     const twoDaysAgo = subHours(new Date(), 48);
 
     const posts = await prisma.post.findMany({
@@ -65,5 +75,11 @@ async function PostWrapper() {
         })),
     }));
 
-    return <Posts posts={serializedPosts} authenticated={user !== null} />;
+    return (
+        <Posts
+            posts={serializedPosts}
+            authenticated={user !== null}
+            isVolunteer={dbUser?.isVolunteer || false}
+        />
+    );
 }

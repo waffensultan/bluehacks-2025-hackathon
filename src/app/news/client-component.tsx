@@ -40,16 +40,11 @@ export default function News({ news }: { news: NewsInterface[] }) {
                     {baranggays[baranggay as keyof typeof baranggays] ??
                         "unknown"}
                 </span>
-                <div className="w-20 h-20 relative flex justify-center items-center">
+                <div className="w-14 h-14 relative flex justify-center items-center -mr-5">
                     <img
-                        src="logo_2.svg"
+                        src="final_logo.svg"
                         alt="alt_logo"
                         className="object-contain"
-                    />
-                    <img
-                        src="logo_3.svg"
-                        alt="alt_logo"
-                        className="absolute bottom-10"
                     />
                 </div>
             </nav>

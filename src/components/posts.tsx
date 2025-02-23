@@ -22,9 +22,11 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/dialog";
 export default function Posts({
     posts,
     authenticated,
+    isVolunteer,
 }: {
     posts: Post[];
     authenticated: boolean;
+    isVolunteer: boolean;
 }) {
     const [clearView, setClearView] = useState(false);
     const [selectedPost, setSelectedPost] = useState<undefined | Post>(
@@ -43,21 +45,51 @@ export default function Posts({
     };
 
     return (
-        <main className="text-black mx-5 h-screen pt-10 flex flex-col gap-5 overflow-auto py-10">
-            {authenticated && (
-                <div className="w-full flex justify-between items-center">
-                    <button type="button" onClick={() => logout()}>
-                        Logout
-                    </button>
+        <main className="text-black h-screen flex flex-col gap-5 overflow-auto px-7 py-5">
+            <div className="w-full flex justify-between items-center">
+                <div className="flex flex-row items-center gap-4">
                     <Link
-                        href={"/apply"}
-                        className="font-semibold tracking-tight underline text-blue-700 flex flex-row items-center gap-1"
+                        href={"/auth"}
+                        className="bg-white w-14 h-14 rounded-full border-2 border-[#03032C] flex justify-center items-center"
                     >
-                        <ExternalLink />
+                        <div className="w-8 h-8">
+                            <img
+                                src="profile.svg"
+                                alt="alt_logo"
+                                className="object-contain"
+                            />
+                        </div>
+                    </Link>
+
+                    {authenticated && (
+                        <button
+                            type="button"
+                            onClick={() => logout()}
+                            className="bg-[#03032C] text-white font-semibold py-2 px-8 rounded-full"
+                        >
+                            Logout
+                        </button>
+                    )}
+                </div>
+
+                <div className="w-[4.4rem] h-[4.4rem] relative flex justify-center items-center">
+                    <img
+                        src="final_logo.svg"
+                        alt="alt_logo"
+                        className="object-contain"
+                    />
+                </div>
+            </div>
+
+            {authenticated && (
+                <div className="bg-gradient-to-r from-[#FDA303] to-[#FF6912] border-2 border-[#03032C] rounded-xl py-2 px-4 text-white font-semibold text-xl text-center underline flex justify-center items-center gap-3">
+                    <ExternalLink />
+                    <Link href={"/apply"}>
                         <span>Apply as a Volunteer</span>
                     </Link>
                 </div>
             )}
+
             {posts.map((post) => {
                 return (
                     <article
@@ -120,7 +152,8 @@ export default function Posts({
                         <section className="flex justify-between items-center">
                             <button
                                 onClick={() => clickButton(post.id)}
-                                className={`text-white font-semibold text-xl py-2 px-3  ${post.status !== "RESCUED" ? "bg-[#FF6912]" : "bg-neutral-500"} rounded-full border-2 border-[#03032C]`}
+                                disabled={!authenticated}
+                                className={`text-white font-semibold text-xl py-2 px-3  ${post.status !== "RESCUED" ? "bg-[#FF6912]" : "bg-neutral-500"} ${!authenticated && "bg-neutral-500"} rounded-full border-2 border-[#03032C]`}
                             >
                                 Take Action
                             </button>
@@ -144,7 +177,7 @@ export default function Posts({
                     <DialogTitle>Clear View</DialogTitle>
                     <article
                         onClick={() => setClearView(true)}
-                        className="border-2 border-[#03032C] bg-white rounded-md p-3 flex flex-col gap-5 relative"
+                        className="border-2 border-[#03032C] bg-white rounded-md p-5 flex flex-col gap-5 relative"
                     >
                         <header className="bg-[#03032C] text-white rounded-xl py-3 px-5 text-2xl font-bold tracking-wider">
                             Cavite · {selectedPost?.baranggay.name}
@@ -242,26 +275,27 @@ export default function Posts({
                             })}
                         </div>
 
-                        <section className="w-full flex justify-between items-center">
-                            <section className="flex flex-col">
-                                <button
-                                    className={`self-start text-white font-semibold text-xl py-2 px-3 ${selectedPost?.status !== "RESCUED" ? " bg-[#FF6912]" : "bg-neutral-500"}  rounded-full border-2 border-[#03032C]`}
-                                >
-                                    Take Action
-                                </button>
-                            </section>
+                        <section className="w-full flex flex-col justify-center items-center gap-3">
+                            <button
+                                disabled={!authenticated}
+                                className={`w-full self-start text-white font-semibold text-xl py-2 px-3 ${selectedPost?.status !== "RESCUED" ? " bg-[#FF6912]" : "bg-neutral-500"}  ${!authenticated && "bg-neutral-500"} rounded-full border-2 border-[#03032C]`}
+                            >
+                                Take Action
+                            </button>
 
-                            {selectedPost?.status === "RESCUING" && (
-                                <button
-                                    onClick={() =>
-                                        completePost(selectedPost?.id!)
-                                    }
-                                    type="button"
-                                    className="self-start text-white font-semibold text-xl py-2 px-3 bg-green-500 whitespace-nowrap rounded-full border-2 border-green-600"
-                                >
-                                    Mark as Completed
-                                </button>
-                            )}
+                            {selectedPost?.status === "RESCUING" &&
+                                isVolunteer &&
+                                authenticated && (
+                                    <button
+                                        onClick={() =>
+                                            completePost(selectedPost?.id!)
+                                        }
+                                        type="button"
+                                        className="w-full self-start text-white font-semibold text-xl py-2 px-3 bg-green-500 whitespace-nowrap rounded-full border-2 border-green-600"
+                                    >
+                                        Mark as Completed
+                                    </button>
+                                )}
                         </section>
 
                         <span>

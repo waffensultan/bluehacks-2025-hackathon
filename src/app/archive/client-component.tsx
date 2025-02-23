@@ -8,11 +8,12 @@ import {
     tagsWithIcons,
     secondaryTags,
 } from "@/lib/constants";
-import { Accessibility } from "lucide-react";
+import { Accessibility, ExternalLink } from "lucide-react";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
+import Link from "next/link";
 import { logout } from "@/app/auth/actions";
 import { takeAction, completePost } from "@/actions/actions";
 
@@ -42,12 +43,51 @@ export default function Archive({
     };
 
     return (
-        <main className="text-black mx-5 h-screen pt-10 flex flex-col gap-5 overflow-auto py-10">
+        <main className="text-black h-screen flex flex-col gap-5 overflow-auto px-7 py-5">
+            <div className="w-full flex justify-between items-center">
+                <div className="flex flex-row items-center gap-4">
+                    <Link
+                        href={"/auth"}
+                        className="bg-white w-14 h-14 rounded-full border-2 border-[#03032C] flex justify-center items-center"
+                    >
+                        <div className="w-8 h-8">
+                            <img
+                                src="profile.svg"
+                                alt="alt_logo"
+                                className="object-contain"
+                            />
+                        </div>
+                    </Link>
+
+                    {authenticated && (
+                        <button
+                            type="button"
+                            onClick={() => logout()}
+                            className="bg-[#03032C] text-white font-semibold py-2 px-8 rounded-full"
+                        >
+                            Logout
+                        </button>
+                    )}
+                </div>
+
+                <div className="w-[4.4rem] h-[4.4rem] relative flex justify-center items-center">
+                    <img
+                        src="final_logo.svg"
+                        alt="alt_logo"
+                        className="object-contain"
+                    />
+                </div>
+            </div>
+
             {authenticated && (
-                <button type="button" onClick={() => logout()}>
-                    Logout
-                </button>
+                <div className="bg-gradient-to-r from-[#FDA303] to-[#FF6912] border-2 border-[#03032C] rounded-xl py-2 px-4 text-white font-semibold text-xl text-center underline flex justify-center items-center gap-3">
+                    <ExternalLink />
+                    <Link href={"/apply"}>
+                        <span>Apply as a Volunteer</span>
+                    </Link>
+                </div>
             )}
+
             {posts.map((post) => {
                 return (
                     <article

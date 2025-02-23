@@ -21,7 +21,7 @@ import {
 
 import { secondaryTags } from "@/lib/constants";
 
-import { Plus } from "lucide-react";
+import { Plus, ImageDown } from "lucide-react";
 import { createPost } from "@/actions/actions";
 
 export default function Navbar() {
@@ -50,9 +50,9 @@ export default function Navbar() {
                 <DialogTrigger asChild>
                     <button
                         type="button"
-                        className="w-16 h-16 border-4 border-white absolute bg-[#03032C] -top-20 right-0 rounded-full flex justify-center items-center"
+                        className="w-16 h-16 border-2 border-[#03032C] absolute bg-[#FF6912] -top-12 right-0 rounded-full flex justify-center items-center mr-10"
                     >
-                        <Plus className="text-white w-10 h-10" />
+                        <Plus className="w-10 h-10 text-white" />
                     </button>
                 </DialogTrigger>
                 <DialogContent className="bg-white border-4 border-[#03032C] text-[#03032C] rounded-xl w-[90%]">
@@ -61,7 +61,7 @@ export default function Navbar() {
                             Create a Post 📝
                         </DialogTitle>
                     </DialogHeader>
-                    <form action={createPost} className="flex flex-col gap-3">
+                    <form action={createPost} className="flex flex-col gap-5">
                         <div className="flex flex-col">
                             <label
                                 htmlFor="name"
@@ -171,6 +171,18 @@ export default function Navbar() {
                                     ))}
                                 </SelectContent>
                             </Select>
+                        </div>
+
+                        <div className="flex flex-col">
+                            <label
+                                htmlFor="image"
+                                className="text-xl tracking-wide"
+                            >
+                                Upload image
+                            </label>
+                            <div className="w-full bg-gray-400 rounded-md h-32 flex justify-center items-center">
+                                <ImageDown className="w-20 h-20" />
+                            </div>
                         </div>
 
                         <div className="flex w-full justify-center items-center pt-10">

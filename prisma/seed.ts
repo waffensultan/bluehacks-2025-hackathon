@@ -1,54 +1,132 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient, PostStatus } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
 async function main() {
-    // Fetch all baranggays with correct field name
-    const baranggays = await prisma.baranggay.findMany();
+    console.log("🔄 Deleting existing data...");
 
-    const newsData = [
-        {
-            title: "Flooding in Indang",
-            content:
-                "Heavy rains have caused flooding in several areas of Indang. Residents are advised to take precautions.",
-            baranggayId: "1",
-        },
-        {
-            title: "Fire Incident in Imus",
-            content:
-                "A fire broke out in a residential area in Imus. Firefighters are currently on the scene.",
-            baranggayId: "2",
-        },
-        {
-            title: "Traffic Congestion in Dasmariñas",
-            content:
-                "Heavy traffic has been reported on major roads in Dasmariñas due to ongoing roadworks.",
-            baranggayId: "3",
-        },
-        {
-            title: "Power Outage in Alfonso",
-            content:
-                "Residents of Alfonso are experiencing a power outage due to maintenance work by the local power provider.",
-            baranggayId: "4",
-        },
-    ];
+    await prisma.tag.deleteMany({});
+    await prisma.post.deleteMany({});
+    await prisma.news.deleteMany({});
+    await prisma.user.deleteMany({});
+    await prisma.baranggay.deleteMany({});
 
-    // Ensure only valid data is inserted
-    const filteredNewsData = newsData;
+    console.log("✅ Database cleared. Seeding fresh data...");
 
-    if (filteredNewsData.length > 0) {
-        await prisma.news.createMany({ data: filteredNewsData });
-        console.log("✅ News seeding completed!");
-    } else {
-        console.log("⚠️ No valid baranggay data found. Seeding skipped.");
-    }
+    // Seed Baranggays
+    const baranggays = await prisma.baranggay.createMany({
+        data: [
+            { id: "1", name: "Indang" },
+            { id: "2", name: "Imus" },
+            { id: "3", name: "Dasmarinas" },
+            { id: "4", name: "Alfonso" },
+        ],
+    });
+
+    console.log("✅ Baranggays added!");
+
+    // Fetch Baranggay IDs
+    const baranggayIndang = await prisma.baranggay.findFirst({
+        where: { name: "Indang" },
+    });
+    const baranggayImus = await prisma.baranggay.findFirst({
+        where: { name: "Imus" },
+    });
+    const baranggayDasma = await prisma.baranggay.findFirst({
+        where: { name: "Dasmarinas" },
+    });
+    const baranggayAlfonso = await prisma.baranggay.findFirst({
+        where: { name: "Alfonso" },
+    });
+
+    // Seed Users
+    const user1 = await prisma.user.create({
+        data: {
+            name: "John Doe",
+            email: "john@example.com",
+            isVolunteer: true,
+        },
+    });
+
+    const user2 = await prisma.user.create({
+        data: {
+            name: "Jane Smith",
+            email: "jane@example.com",
+            isVolunteer: false,
+        },
+    });
+
+    console.log("✅ Users added!");
+
+    // Seed Posts
+    const post1 = await prisma.post.create({
+        data: {
+            name: "Anonymous",
+            status: PostStatus.AWAITING,
+            baranggayId: baranggayIndang?.id || "",
+            authorId: user1.id,
+        },
+    });
+
+    const post2 = await prisma.post.create({
+        data: {
+            name: "Maria Santos",
+            status: PostStatus.RESCUING,
+            baranggayId: baranggayImus?.id || "",
+            authorId: user2.id,
+        },
+    });
+
+    console.log("✅ Posts added!");
+
+    // Seed Tags
+    await prisma.tag.createMany({
+        data: [
+            { title: "Child", postId: post1.id },
+            { title: "Pregnant", postId: post2.id },
+        ],
+    });
+
+    console.log("✅ Tags added!");
+
+    // Seed News for Each Baranggay
+    await prisma.news.createMany({
+        data: [
+            {
+                title: "Indang Faces Power Outage Due to Heavy Rainfall",
+                content:
+                    "Several areas in Indang experienced power interruptions following heavy rains. Authorities are working on restoring power lines.",
+                baranggayId: baranggayIndang?.id || "",
+            },
+            {
+                title: "Imus Implements Stricter Traffic Rules",
+                content:
+                    "The city government of Imus has enforced new traffic policies to ease congestion during peak hours. Motorists are advised to follow the new guidelines.",
+                baranggayId: baranggayImus?.id || "",
+            },
+            {
+                title: "Dasmariñas Residents Urged to Prepare for Typhoon",
+                content:
+                    "With a typhoon expected to make landfall, officials in Dasmariñas are advising residents to stock up on supplies and stay indoors.",
+                baranggayId: baranggayDasma?.id || "",
+            },
+            {
+                title: "Alfonso Launches Free Medical Checkups for Seniors",
+                content:
+                    "The local government of Alfonso has initiated a free medical checkup program for senior citizens to promote health awareness.",
+                baranggayId: baranggayAlfonso?.id || "",
+            },
+        ],
+    });
+
+    console.log("✅ News added for each baranggay!");
 }
 
 main()
     .catch((e) => {
-        console.error("❌ Seeding failed:", e);
-        process.exit(1);
+        console.error("❌ Error seeding database:", e);
     })
     .finally(async () => {
         await prisma.$disconnect();
+        console.log("🌱 Seeding completed!");
     });
