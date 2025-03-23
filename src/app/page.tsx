@@ -49,9 +49,9 @@ async function PostWrapper() {
                     {
                         status: "RESCUED",
                     },
-                    {
-                        createdAt: { lt: twoDaysAgo },
-                    },
+                    // {
+                    //     createdAt: { lt: twoDaysAgo },
+                    // },
                 ],
             },
         },
